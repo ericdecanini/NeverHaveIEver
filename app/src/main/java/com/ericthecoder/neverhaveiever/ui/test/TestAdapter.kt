@@ -1,4 +1,4 @@
-package com.ericthecoder.neverhaveiever.ui.main
+package com.ericthecoder.neverhaveiever.ui.test
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +9,9 @@ import com.ericthecoder.neverhaveiever.R
 import com.ericthecoder.neverhaveiever.data.model.User
 import kotlinx.android.synthetic.main.list_item_user.view.*
 
-class MainAdapter(
+class TestAdapter(
     private val users: ArrayList<User>
-) : RecyclerView.Adapter<MainAdapter.DataViewHolder>() {
+) : RecyclerView.Adapter<TestAdapter.DataViewHolder>() {
 
     class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(user: User) {
