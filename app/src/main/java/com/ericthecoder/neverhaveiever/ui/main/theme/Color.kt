@@ -2,7 +2,9 @@ package com.ericthecoder.neverhaveiever.ui.main.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple200 = Color(0xFFBB86FC)
-val Purple500 = Color(0xFF6200EE)
-val Purple700 = Color(0xFF3700B3)
-val Teal200 = Color(0xFF03DAC5)
+val TealMain = Color(0xFF27DBD6)
+val TealMainLight = Color(0xFF71FFFF)
+val TealMainDark = Color(0xFF00A9A5)
+
+val NewYorkPink = Color(0xFFCD8987)
+val NewYorkPinkDark = Color(0xFF9A5B5A)
