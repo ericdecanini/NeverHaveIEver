@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -34,17 +35,27 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun IntroScreen() {
     Column(
-        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        Spacer(modifier = Modifier.height(32.dp))
+
         Image(
             painter = painterResource(id = R.drawable.logo_main_transparent),
             contentDescription = null
         )
 
-        Spacer(modifier = Modifier.height(64.dp))
+        Spacer(modifier = Modifier.height(48.dp))
 
         GameModeButton()
+
+        Spacer(modifier = Modifier.height(48.dp))
+
+        Text(
+            "This is a development version of the app. More game modes will be available soon",
+            modifier = Modifier.padding(horizontal = 16.dp),
+            color = MaterialTheme.colors.onBackground.copy(alpha = 0.4f),
+            textAlign = TextAlign.Center
+        )
     }
 }
 
@@ -52,7 +63,7 @@ fun IntroScreen() {
 fun TopBar() {
     Column(modifier = Modifier.statusBarsPadding()) {
         TopAppBar(
-            backgroundColor = MaterialTheme.colors.primarySurface,
+            backgroundColor = MaterialTheme.colors.primary,
             contentColor = contentColorFor(backgroundColor),
             elevation = 0.dp,
         ) {}
@@ -65,7 +76,7 @@ fun GameModeButton() {
     Card(
         modifier = Modifier
             .height(200.dp)
-            .width(200.dp),
+            .width(150.dp),
         backgroundColor = Color(0xFFFAFAFA),
         elevation = 4.dp,
     ) {
@@ -96,9 +107,11 @@ fun GameModeButton() {
 @Composable
 fun MainScreen() {
     NeverHaveIEverTheme {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colors.background
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.background),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             TopBar()
             IntroScreen()
