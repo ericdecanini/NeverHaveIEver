@@ -19,13 +19,13 @@ val BalooPaaji2 = FontFamily(
 val Typography = Typography(
     h1 = TextStyle(
         fontFamily = BalooPaaji2,
-        fontWeight = FontWeight.Bold,
+        fontWeight = FontWeight.Normal,
         fontSize = 96.sp,
         letterSpacing = (-1.5).sp
     ),
     h2 = TextStyle(
         fontFamily = BalooPaaji2,
-        fontWeight = FontWeight.Bold,
+        fontWeight = FontWeight.Light,
         fontSize = 60.sp,
         letterSpacing = (-0.5).sp
     ),
