@@ -16,7 +16,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.ericthecoder.neverhaveiever.R
+import com.ericthecoder.neverhaveiever.ui.main.game.GameBody
 import com.ericthecoder.neverhaveiever.ui.main.home.HomeBody
 import com.ericthecoder.neverhaveiever.ui.main.theme.NeverHaveIEverTheme
 
@@ -30,10 +36,34 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun NeverHaveIEverApp() {
     NeverHaveIEverTheme {
+        val navController = rememberNavController()
+
         Scaffold(
             topBar = { TopBar() }
         ) { innerPadding ->
-            HomeBody(Modifier.padding(innerPadding))
+            MainNavHost(
+                navController = navController,
+                modifier = Modifier.padding(innerPadding)
+            )
+        }
+    }
+}
+
+@Composable
+fun MainNavHost(
+    navController: NavHostController,
+    modifier: Modifier = Modifier
+) {
+    NavHost(
+        navController = navController,
+        startDestination = MainScreen.Home.name,
+        modifier = modifier
+    ) {
+        composable(MainScreen.Home.name) {
+            HomeBody { navController.navigate(MainScreen.Game.name) }
+        }
+        composable(MainScreen.Game.name) {
+            GameBody()
         }
     }
 }
