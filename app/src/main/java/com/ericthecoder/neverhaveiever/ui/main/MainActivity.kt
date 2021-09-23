@@ -3,6 +3,7 @@ package com.ericthecoder.neverhaveiever.ui.main
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,22 +20,27 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.ericthecoder.neverhaveiever.R
 import com.ericthecoder.neverhaveiever.ui.main.game.GameBody
+import com.ericthecoder.neverhaveiever.ui.main.game.GameViewModel
 import com.ericthecoder.neverhaveiever.ui.main.home.HomeBody
 import com.ericthecoder.neverhaveiever.ui.main.theme.NeverHaveIEverTheme
 
 class MainActivity : ComponentActivity() {
+
+    private val gameViewModel by viewModels<GameViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent { NeverHaveIEverApp() }
+        setContent { NeverHaveIEverApp(gameViewModel) }
     }
 }
 
 @Composable
-fun NeverHaveIEverApp() {
+fun NeverHaveIEverApp(
+    gameViewModel: GameViewModel
+) {
     NeverHaveIEverTheme {
         val navController = rememberNavController()
 
@@ -43,6 +49,7 @@ fun NeverHaveIEverApp() {
         ) { innerPadding ->
             MainNavHost(
                 navController = navController,
+                gameViewModel = gameViewModel,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -52,6 +59,7 @@ fun NeverHaveIEverApp() {
 @Composable
 fun MainNavHost(
     navController: NavHostController,
+    gameViewModel: GameViewModel,
     modifier: Modifier = Modifier
 ) {
     NavHost(
@@ -63,9 +71,17 @@ fun MainNavHost(
             HomeBody { navController.navigate(MainScreen.Game.name) }
         }
         composable(MainScreen.Game.name) {
-            GameBody()
+            MainGameScreen(gameViewModel)
         }
     }
+}
+
+@Composable
+fun MainGameScreen(viewModel: GameViewModel) {
+    GameBody(
+        question = viewModel.question,
+        onScreenClick = viewModel::postRandomQuestion,
+    )
 }
 
 @Composable
