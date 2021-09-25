@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -24,6 +25,7 @@ import androidx.navigation.compose.rememberNavController
 import com.ericthecoder.neverhaveiever.R
 import com.ericthecoder.neverhaveiever.ui.main.game.GameBody
 import com.ericthecoder.neverhaveiever.ui.main.game.GameViewModel
+import com.ericthecoder.neverhaveiever.ui.main.game.data.FakeData
 import com.ericthecoder.neverhaveiever.ui.main.home.HomeBody
 import com.ericthecoder.neverhaveiever.ui.main.theme.NeverHaveIEverTheme
 
@@ -68,20 +70,33 @@ fun MainNavHost(
         modifier = modifier
     ) {
         composable(MainScreen.Home.name) {
-            HomeBody { navController.navigate(MainScreen.Game.name) }
+            HomeBody { onGameStart(gameViewModel, navController) }
         }
         composable(MainScreen.Game.name) {
-            MainGameScreen(gameViewModel)
+            MainGameScreen(gameViewModel, navController)
         }
     }
 }
 
+private fun onGameStart(viewModel: GameViewModel, navController: NavController) {
+    viewModel.startGame(FakeData.cards) // TODO: Replace with real data
+    navController.navigate(MainScreen.Game.name)
+}
+
 @Composable
-fun MainGameScreen(viewModel: GameViewModel) {
+fun MainGameScreen(
+    viewModel: GameViewModel,
+    navController: NavController
+) {
     GameBody(
-        question = viewModel.question,
+        state = viewModel.uiState,
         onScreenClick = viewModel::postRandomQuestion,
+        onGameEnd = { onGameEnd(navController) }
     )
+}
+
+private fun onGameEnd(navController: NavController) {
+    navController.navigateUp()
 }
 
 @Composable

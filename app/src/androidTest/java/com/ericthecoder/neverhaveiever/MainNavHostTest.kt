@@ -7,6 +7,10 @@ import androidx.compose.ui.test.performClick
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.ericthecoder.neverhaveiever.ui.main.MainNavHost
+import com.ericthecoder.neverhaveiever.ui.main.game.GameViewModel
+import com.ericthecoder.neverhaveiever.ui.main.game.GameViewModel.UiState.Initial
+import io.mockk.every
+import io.mockk.mockk
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -15,13 +19,17 @@ class MainNavHostTest {
 
   @get:Rule
   val composeTestRule = createComposeRule()
-  lateinit var navController: NavHostController
+
+  private lateinit var navController: NavHostController
+  private val gameViewModel: GameViewModel = mockk(relaxUnitFun = true) {
+    every { uiState } returns Initial
+  }
 
   @Before
   fun setup() {
     composeTestRule.setContent {
       navController = rememberNavController()
-      MainNavHost(navController = navController)
+      MainNavHost(navController = navController, gameViewModel = gameViewModel)
     }
   }
 
