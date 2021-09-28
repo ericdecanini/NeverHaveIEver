@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -38,7 +39,7 @@ fun GameBody(
 ) {
     Box(
         modifier = modifier
-            .background(MaterialTheme.colors.primary)
+            .background((state as? Ongoing)?.color ?: MaterialTheme.colors.primary)
             .fillMaxSize()
             .noRippleClickable(onScreenClick)
             .padding(16.dp)
@@ -83,7 +84,7 @@ fun OngoingState(question: String) {
 @Composable
 fun GameBodyPreview() {
     NeverHaveIEverTheme {
-        GameBody(Ongoing("Lorem Ipsum"), {}, {})
+        GameBody(Ongoing("Lorem Ipsum", Color(0xFF00FF00)), {}, {})
     }
 }
 

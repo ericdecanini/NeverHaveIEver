@@ -3,10 +3,10 @@ package com.ericthecoder.neverhaveiever.ui.main.game
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
-import com.ericthecoder.neverhaveiever.ui.main.game.GameViewModel.UiState.Ended
-import com.ericthecoder.neverhaveiever.ui.main.game.GameViewModel.UiState.Initial
-import com.ericthecoder.neverhaveiever.ui.main.game.GameViewModel.UiState.Ongoing
+import com.ericthecoder.neverhaveiever.ui.main.game.GameViewModel.UiState.*
+import kotlin.random.Random
 
 class GameViewModel : ViewModel() {
 
@@ -22,10 +22,13 @@ class GameViewModel : ViewModel() {
 
   fun postRandomQuestion() {
     availableQuestions.randomOrNull()?.let { question ->
-      uiState = Ongoing(question)
+      uiState = Ongoing(question, generateBackgroundColour())
       availableQuestions.remove(question)
     } ?: endGame()
   }
+
+  private fun generateBackgroundColour()
+          = Color(Random.nextInt(0xEE), Random.nextInt(0xEE), Random.nextInt(0xEE))
 
   private fun endGame() {
     uiState = Ended
@@ -33,7 +36,7 @@ class GameViewModel : ViewModel() {
 
   sealed class UiState {
     object Initial : UiState()
-    class Ongoing(val question: String) : UiState()
+    class Ongoing(val question: String, val color: Color) : UiState()
     object Ended : UiState()
   }
 }
