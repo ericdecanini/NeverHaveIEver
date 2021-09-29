@@ -28,7 +28,7 @@ class GameViewModel : ViewModel() {
   }
 
   private fun generateBackgroundColour()
-          = Color(Random.nextInt(0xEE), Random.nextInt(0xEE), Random.nextInt(0xEE))
+          = Color(Random.nextInt(0xCC), Random.nextInt(0xCC), Random.nextInt(0xCC))
 
   private fun endGame() {
     uiState = Ended

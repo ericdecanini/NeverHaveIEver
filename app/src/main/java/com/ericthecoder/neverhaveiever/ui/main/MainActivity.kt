@@ -1,6 +1,7 @@
 package com.ericthecoder.neverhaveiever.ui.main
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -14,7 +15,9 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -91,11 +94,13 @@ fun MainGameScreen(
     GameBody(
         state = viewModel.uiState,
         onScreenClick = viewModel::postRandomQuestion,
-        onGameEnd = { onGameEnd(navController) }
+        onGameEnd = { OnGameEnd(navController) }
     )
 }
 
-private fun onGameEnd(navController: NavController) {
+@Composable
+private fun OnGameEnd(navController: NavController) {
+    Toast.makeText(LocalContext.current, stringResource(R.string.end_game_message), Toast.LENGTH_SHORT).show()
     navController.navigateUp()
 }
 

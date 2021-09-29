@@ -34,7 +34,7 @@ import com.ericthecoder.neverhaveiever.ui.main.theme.NeverHaveIEverTheme
 fun GameBody(
     state: UiState,
     onScreenClick: () -> Unit,
-    onGameEnd: () -> Unit,
+    onGameEnd: @Composable () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -56,7 +56,7 @@ fun GameBody(
 @Composable
 fun GameContentFromState(
     state: UiState,
-    onGameEnd: () -> Unit
+    onGameEnd: @Composable () -> Unit
 ) = when(state) {
     Initial -> { /* do nothing */ }
     is Ongoing -> OngoingState(question = state.question)
